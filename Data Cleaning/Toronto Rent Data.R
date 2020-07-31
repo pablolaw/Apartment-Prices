@@ -34,7 +34,12 @@ neighbourhood_data_loader <- function(){
   neighbourhoods <- filter(datastore_resources, row_number()==1) %>% get_resource()
   neighbourhoods
   
-  return(neighbourhoods)
+  names(neighbourhoods) <- tolower(names(neighbourhoods)) 
+  
+  nbhd_df <- transform(neighbourhoods, area_short_code = as.numeric(area_short_code) , 
+                       area_long_code = as.numeric(area_long_code))
+  
+  return(nbhd_df)
 }
 
 # Data Cleaning ----------------------------------------------------------
@@ -78,3 +83,5 @@ toronto_map_plot <- function(nbhd_df,data_df){
     ggtitle("Rent Data on Toronto Map (No Outliers)")
 }
  
+
+
