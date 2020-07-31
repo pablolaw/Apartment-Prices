@@ -39,7 +39,17 @@ neighbourhood_data_loader <- function(){
   nbhd_df <- transform(neighbourhoods, area_short_code = as.numeric(area_short_code) , 
                        area_long_code = as.numeric(area_long_code))
   
-  return(nbhd_df)
+  neighbourhood_profiles <- read_csv("RCSV Files/Apartment-Prices/data/neighbourhood_profiles.csv")
+  names(neighbourhood_profiles) <- tolower(names(neighbourhood_profiles))
+  
+  # joins two dataframes 
+  nbhd_merge <- merge( nbhd_df,neighbourhood_profiles, by = "area_short_code")
+  
+  # cleans merged dataframe
+  nbhd_clean <- nbhd_merge[ , !names(nbhd_merge) %in% c("x","y", "area_name.y","area_desc")]
+  ordered_columns_leftside <- c('X_id','area_short_code','area_long_code','area_name.x')
+  nbhd_clean_reorder <- nbhd_clean[c(ordered_columns_leftside, setdiff(names(nbhd_clean),ordered_columns_leftside))]
+  return(nbhd_clean_reorder)
 }
 
 # Data Cleaning ----------------------------------------------------------
@@ -83,5 +93,6 @@ toronto_map_plot <- function(nbhd_df,data_df){
     ggtitle("Rent Data on Toronto Map (No Outliers)")
 }
  
+
 
 
