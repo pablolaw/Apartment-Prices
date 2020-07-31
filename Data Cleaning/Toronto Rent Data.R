@@ -18,7 +18,7 @@ data_pipeline <- function(){
 }
 # Data Loader -------------------------------------------------------------
 
-data_loader <- function(){
+neighbourhood_data_loader <- function(){
 
   # get package
   package <- show_package("4def3f65-2a65-4a4f-83c4-b2a4aed72d46")
