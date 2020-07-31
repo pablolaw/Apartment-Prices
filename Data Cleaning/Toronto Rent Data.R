@@ -3,6 +3,7 @@ library(sf)
 library(opendatatoronto)
 library(viridis)
 
+print(poop)
 # Rent Data ---------------------------------------------------------------
 rent_data_loader <- function(){
   rent_data <- read_csv("RCSV Files/rent_data.csv")
