@@ -2,6 +2,7 @@ library(tidyverse)
 library(sf)
 library(opendatatoronto)
 library(viridis)
+library(janitor)
 
 # Rent Data ---------------------------------------------------------------
 rent_data_loader <- function(){
@@ -49,9 +50,12 @@ neighbourhood_data_loader <- function(){
   nbhd_clean <- nbhd_merge[ , !names(nbhd_merge) %in% c("x","y", "area_name.y","area_desc")]
   ordered_columns_leftside <- c('X_id','area_short_code','area_long_code','area_name.x')
   nbhd_clean_reorder <- nbhd_clean[c(ordered_columns_leftside, setdiff(names(nbhd_clean),ordered_columns_leftside))]
+  nbhd_clean_reorder <- janitor::clean_names(nbhd_clean_reorder) 
+  
+  View(nbhd_clean_reorder)
+  
   return(nbhd_clean_reorder)
 }
-
 # Data Cleaning ----------------------------------------------------------
 
 data_cleaner <- function(df){
@@ -92,7 +96,5 @@ toronto_map_plot <- function(nbhd_df,data_df){
     scale_color_viridis() +
     ggtitle("Rent Data on Toronto Map (No Outliers)")
 }
- 
-
 
 
